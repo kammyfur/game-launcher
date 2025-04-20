@@ -1,0 +1,202 @@
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url("../material/material-classic.woff2") format('woff2');
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -moz-font-feature-settings: 'liga';
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+    font-family: 'Material Icons Outlined';
+    font-style: normal;
+    font-weight: 400;
+    src: url("../material/material-outlined.woff2") format('woff2');
+}
+
+.material-icons-outlined {
+    font-family: 'Material Icons Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -moz-font-feature-settings: 'liga';
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ------------------ */
+
+html, body {
+    margin: 0;
+    background-color: var(--mdc-theme-background);
+    color: var(--mdc-theme-on-background);
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+:root {
+    --mdc-theme-primary: #291538;
+    --mdc-theme-secondary: #312a16;
+    --mdc-theme-surface: #545454;
+    --mdc-theme-background: #333;
+    --mdc-theme-on-primary: white;
+    --mdc-theme-on-secondary: white;
+    --mdc-theme-on-surface: white;
+    --mdc-theme-on-background: white;
+    --mdc-theme-text-primary-on-background: white;
+    --mdc-typography-font-family: system-ui, system, -apple-system
+}
+
+.main-content {
+    margin-top: 64px;
+    position: absolute;
+    padding: 50px;
+    width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+}
+
+.game-card {
+    display: grid;
+    grid-template-columns: 136px 1fr;
+    width: 100%;
+}
+
+.game-card-image {
+    height: 120px;
+    width: 120px;
+    padding: 8px;
+}
+
+h3 {
+    font-weight: bold;
+}
+
+.mdc-button:not(:disabled) {
+    color: #ca82ff;
+}
+
+.mdc-button--raised {
+    color: white !important;
+}
+
+.game-list-image {
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+}
+
+#launch {
+    background-color: black;
+    display: flex;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    z-index: 99;
+    position: fixed;
+    font-size: 36px;
+}
+
+#gameview {
+    background-color: var(--mdc-theme-background);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+    position: fixed;
+}
+
+main {
+    z-index: 5;
+}
+
+#gameview > .mdc-top-app-bar {
+    background-color: black;
+}
+
+#newgame > .mdc-top-app-bar {
+    background-color: #183815;
+}
+
+#newgame {
+    background-color: var(--mdc-theme-background);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+    position: fixed;
+}
+
+#crash > .mdc-top-app-bar {
+    background-color: #461010;
+}
+
+#crash {
+    background-color: var(--mdc-theme-background);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+    position: fixed;
+}
+
+#settings > .mdc-top-app-bar {
+    background-color: #101446;
+}
+
+#settings {
+    background-color: var(--mdc-theme-background);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+    position: fixed;
+}
+
+#gameview-icon {
+    width: 100px;
+    height: 100px;
+}
+
+#gamelogs {
+    background: #2b2b2b;
+    margin-left: 50px;
+    margin-right: 50px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+hr.separator {
+    border-top: none;
+    border-bottom-color: rgba(0, 0, 0, .5);
+}

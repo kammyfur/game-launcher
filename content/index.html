@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Game Launcher</title>
+        <link rel="stylesheet" href="../material/material-components-web.min.css">
+        <script src="../material/material-components-web.min.js" charset="utf-8"></script>
+        <script src="api.js" charset="utf-8"></script>
+        <link rel="stylesheet" href="../css/system.css">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+    </head>
+
+    <body class="mdc-typography">
+        <header class="mdc-top-app-bar">
+            <div class="mdc-top-app-bar__row">
+                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                    <span class="mdc-top-app-bar__title">Game Launcher</span>
+                </section>
+                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+                    <button onclick="GamesAPI.setup.open()" class="material-icons-outlined mdc-top-app-bar__action-item mdc-icon-button" aria-label="Paramètres">settings</button>
+                </section>
+            </div>
+        </header>
+
+        <main class="main-content" id="main-content">
+            <div id="lastplayed"></div>
+            <div id="lastplayed-default" style="display:none;">
+                <h2>Continuer à jouer ...</h2>
+                <div class="game-card">
+                    <img src="{lastplay_icon}" class="game-card-image">
+                    <div class="game-card-message">
+                        <h3>
+                            {lastplay_name}
+                            <small>[{lastplay_type}]</small>
+                        </h3>
+                        <p>Joué pour la dernière fois {lastplay_time}</p>
+                        <button onclick="document.getElementById('lastplayed').focus();GamesAPI.continue();" class="mdc-button mdc-button--raised">
+                            <div class="mdc-button__ripple"></div>
+                            <i class="material-icons-outlined mdc-button__icon" aria-hidden="true">gamepad</i>
+                            <span class="mdc-button__label">Jouer</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Votre collection</h2>
+            <ul class="mdc-list" id="gamelist">
+                <li class="mdc-list-item" tabindex="0">
+                    <span class="mdc-list-item__ripple"></span>
+                    <span class="mdc-list-item__text"><img src="{lastplay_icon}" class="game-list-image"> Single-line item</span>
+                </li>
+                <li class="mdc-list-item">
+                    <span class="mdc-list-item__ripple"></span>
+                    <span class="mdc-list-item__text"><img src="{lastplay_icon}" class="game-list-image"> Single-line item</span>
+                </li>
+                <li class="mdc-list-item">
+                    <span class="mdc-list-item__ripple"></span>
+                    <span class="mdc-list-item__text"><img src="{lastplay_icon}" class="game-list-image"> Single-line item</span>
+                </li>
+            </ul>
+            <div id="nogames">
+                <i>Vous n'avez aucun jeu (pour l'instant).</i>
+            </div>
+
+            <button onclick="document.getElementsByTagName('body')[0].focus();GamesAPI.new.open();" class="mdc-button">
+                <div class="mdc-button__ripple"></div>
+                <i class="material-icons-outlined mdc-button__icon" aria-hidden="true">add</i>
+                <span class="mdc-button__label">En ajouter d'autres...</span>
+            </button>
+        </main>
+
+        <article class="gameview" id="gameview" style="display:none;">
+            <header class="mdc-top-app-bar">
+                <div class="mdc-top-app-bar__row">
+                    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                        <button onclick="GamesAPI.view.close()" class="material-icons-outlined mdc-top-app-bar__navigation-icon mdc-icon-button" aria-label="Fermer">close</button>
+                        <span class="mdc-top-app-bar__title" id="gameview-name">Jeu</span>
+                    </section>
+                    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar"></section>
+                </div>
+            </header>
+
+            <div style="text-align:center;margin-top: 86px;">
+                <img src="about:blank" alt="Logo" id="gameview-icon">
+            </div>
+
+            <h2 style="text-align:center;" id="gameview-name-2">Jeu<br><small>Type de jeu</small></h2>
+
+            <p style="text-align:center;" id="gameview-time">Erreur</p>
+
+            <p style="text-align:center;">
+                <button onclick="document.getElementById('lastplayed').focus();GamesAPI.view.play();" class="mdc-button mdc-button--raised">
+                    <div class="mdc-button__ripple"></div>
+                    <i class="material-icons-outlined mdc-button__icon" aria-hidden="true">gamepad</i>
+                    <span class="mdc-button__label">Jouer</span>
+                </button>
+            </p>
+        </article>
+
+        <article class="newgame" id="newgame" style="display:none;">
+            <header class="mdc-top-app-bar">
+                <div class="mdc-top-app-bar__row">
+                    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                        <button onclick="GamesAPI.new.close()" class="material-icons-outlined mdc-top-app-bar__navigation-icon mdc-icon-button" aria-label="Fermer">close</button>
+                        <span class="mdc-top-app-bar__title">Ajouter un nouveau jeu</span>
+                    </section>
+                    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar"></section>
+                </div>
+            </header>
+
+            <div style="margin-top: 86px;text-align:center;">
+                <input type="text" id="newgame-name" placeholder="Nom du jeu"><br>
+                <input type="text" id="newgame-command" placeholder="Commande"><br>
+                <select id="newgame-type">
+                    <option disabled selected value="no">Type de jeu</option>
+                    <option value="Tower Defense">Tower Defense</option>
+                    <option value="Platformer">Platformer</option>
+                    <option value="Point and Click">Point and Click</option>
+                    <option value="Sandbox">Sandbox</option>
+                    <option value="Shoot them Up">Shoot them Up</option>
+                    <option value="FPS">FPS</option>
+                    <option value="RPG">RPG</option>
+                    <option value="Mind">Mind</option>
+                    <option value="Puzzle">Puzzle</option>
+                    <option value="Sport">Sport</option>
+                    <option value="Beat them All">Beat them All</option>
+                    <option value="PVP/PVE">PVP/PVE</option>
+                    <option value="?">?</option>
+                </select><br>
+                <p>Le logo du jeu sera sélectionné automatiquement à partir de la commande</p>
+                <p>
+                    <button onclick="document.getElementById('lastplayed').focus();GamesAPI.new.confirm();" class="mdc-button mdc-button--raised">
+                        <div class="mdc-button__ripple"></div>
+                        <i class="material-icons-outlined mdc-button__icon" aria-hidden="true">check_box</i>
+                        <span class="mdc-button__label">Ajouter</span>
+                    </button>
+                </p>
+            </div>
+        </article>
+
+        <article class="crash" id="crash" style="display:none;">
+            <header class="mdc-top-app-bar">
+                <div class="mdc-top-app-bar__row">
+                    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                        <button onclick="GamesAPI.crash.close()" class="material-icons-outlined mdc-top-app-bar__navigation-icon mdc-icon-button" aria-label="Fermer">close</button>
+                        <span class="mdc-top-app-bar__title">Plantage du jeu</span>
+                    </section>
+                    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar"></section>
+                </div>
+            </header>
+
+            <div style="margin-top: 86px;text-align:center;">
+                <h1>Ce jeu n'a pas bien fonctionné...</h1>
+                <p>Une erreur s'est produite et le jeu a été arrêté innopinément. Réessayez de lancer le jeu. Si le problème persiste, essayez de :
+                <ul>
+                    <li>supprimer les données du jeu ;</li>
+                    <li>réinstaller le jeu ;</li>
+                    <li>modifier vos paramètres ;</li>
+                    <li>lancer le jeu sans Game Launcher ;</li>
+                    <li>mettre à jour le jeu</li>
+                </ul></p>
+                <p id="crashanalysys">Nous analysons la situation pour trouver ce qui a causé le problème...</p>
+                <h2>Journeaux du jeu</h2>
+                <pre id="gamelogs"></pre>
+            </div>
+        </article>
+
+        <article class="settings" id="settings" style="display:none;">
+            <header class="mdc-top-app-bar">
+                <div class="mdc-top-app-bar__row">
+                    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                        <button onclick="GamesAPI.setup.close()" class="material-icons-outlined mdc-top-app-bar__navigation-icon mdc-icon-button" aria-label="Fermer">close</button>
+                        <span class="mdc-top-app-bar__title">Paramètres du lanceur</span>
+                    </section>
+                    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar"></section>
+                </div>
+            </header>
+
+            <div style="margin-top: 86px;text-align:center;">
+                <h1>Supprimer des jeux</h1>
+                <p>Supprimer un jeu ici ne le désinstalle pas de votre système, vous devez utiliser votre gestionnaire de paquets pour désinstaller le jeu. Désinstaller un jeu sans le retirer de Game Launcher peut causer des problèmes.</p>
+                <p>Cliquez sur le nom d'un jeu pour le supprimer de Game Launcher.</p>
+            </div>
+
+            <ul class="mdc-list" id="removegame">
+                <li class="mdc-list-item" tabindex="0">
+                    <span class="mdc-list-item__ripple"></span>
+                    <span class="mdc-list-item__text">Single-line item</span>
+                </li>
+            </ul>
+        </article>
+
+        <div id="launch" style="display:none;">
+            Lancement du jeu en cours...
+        </div>
+    </body>
+
+</html>
